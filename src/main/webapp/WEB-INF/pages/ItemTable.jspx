@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div id="itemtable" xmlns:jsp="http://java.sun.com/JSP/Page"
+     xmlns:c="http://java.sun.com/jsp/jstl/core"
+     version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <c:url var="showitemsUrl" value="/showitems.htm"></c:url>
+    <c:url var="jsUrl" value="/resources/js/showitems.js"></c:url>
+    <c:url var="imagesUrl" value="/resources/images"></c:url>
+    <jsp:useBean id="dateValue" class="java.util.Date"/>
+    <div id="showItems">
+        <div class="clear"><jsp:text> </jsp:text></div>
+
+        <div id="itemsTable">
+            <table class="sort" id="itemTable">
+                <caption>Items</caption>
+                <thead>
+                <tr>
+                    <td id="UID">UID&#8645;</td>
+                    <td id="Title">Title&#8645;</td>
+                    <td id="Description">Description&#8645;</td>
+                    <td id="Seller">Seller&#8645;</td>
+                    <td id="Start_price">Start price&#8645;</td>
+                    <td id="BidInc">BidInc&#8645;</td>
+                    <td id="Best_offer">Best offer&#8645;</td>
+                    <td id="Bidder">Bidder&#8645;</td>
+                    <td id="Stop_date">Stop date&#8645;</td>
+                    <td id="Category">Category&#8645;</td>
+                    <td>Bidding</td>
+                </tr>
+                </thead>
+                <tbody id="itmesTBody"><jsp:text> </jsp:text></tbody>
+            </table>
+            <div id="err" class="erorrs"><jsp:text> </jsp:text></div>
+        </div>
+
+        <div>
+            <ul class="nav">
+                <li><input id="backArrow" type="image" src="${imagesUrl}/arrow-left.png" value="back"/></li>
+                <li id="pageNumber" style="color: gray; margin-left: 1em; margin-right: 1em; font-size: 2em;"></li>
+                <li><input id="forwardArrow" type="image" src="${imagesUrl}/arrow-right.png" value="forward"/></li>
+            </ul>
+        </div>
+
+    </div>
+    <script src="${jsUrl}" type="text/javascript"><!-- required for FF3 and Opera --><jsp:text> </jsp:text></script>
+</div>

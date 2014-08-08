@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+
+<body xmlns:jsp="http://java.sun.com/JSP/Page"
+      xmlns:spring="http://www.springframework.org/tags"
+      version="2.0"
+        >
+<jsp:directive.page contentType="text/html;charset=UTF-8"/>
+<jsp:output omit-xml-declaration="yes"/>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=8"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="${cssUrl}"/>
+
+
+    <spring:message code="application_name" var="app_name" htmlEscape="false"/>
+    <title><spring:message code="welcome_h3" arguments="${app_name}"/>
+    </title>
+</head>
+<h1>Hi world! </h1>
+<spring:message code="welcome_h3" arguments="${app_name}"/>
+
+</body>

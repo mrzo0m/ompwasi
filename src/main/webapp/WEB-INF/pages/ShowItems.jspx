@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page"
+     xmlns:c="http://java.sun.com/jsp/jstl/core"
+     xmlns:spring="http://www.springframework.org/tags"
+     version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <spring:message code="label_welcome" var="labelWelcome"/>
+    <c:url var="logoutUrl" value="/logout"/>
+    <c:url var="searchUrl" value="/search"/>
+    <c:url var="sellUrl" value="/edititem.htm"/>
+    <c:url var="myitemsUrl" value="/showmyitems.htm"/>
+    <div class="loginInfo">
+        <c:out value="${labelWelcome}"/>
+        <c:choose>
+            <c:when test="${not userContext.authorized}">
+                <c:out value="guest"/>
+            </c:when>
+            <c:otherwise>
+                ${userContext.user.fullName}
+                <a href="${logoutUrl}">logout</a>
+            </c:otherwise>
+        </c:choose>
+    </div>
+    <div class="buttons">
+        <ul>
+            <li><a href="${myitemsUrl}">Show My Items</a></li>
+            <li><a href="${sellUrl}">Sell</a></li>
+        </ul>
+    </div>
+</div>

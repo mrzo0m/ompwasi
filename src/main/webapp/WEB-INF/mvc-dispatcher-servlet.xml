@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/jee
+                    http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+                    http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-3.2.xsd ">
+    <context:component-scan base-package="com.epam.training"/>
+
+    <mvc:resources mapping="/resources/**"
+                   location="/resources/"/>
+    <context:component-scan base-package="com.epam.training" scoped-proxy="targetClass"/>
+    <context:annotation-config/>
+    <mvc:annotation-driven/>
+    <mvc:interceptors>
+        <bean class="com.epam.training.web.interceptor.UserAccessInterceptor"/>
+    </mvc:interceptors>
+    <jee:jndi-lookup id="dataSource"
+                     jndi-name="jdbc/oralocal"
+                     expected-type="javax.sql.DataSource"
+                     resource-ref="true"/>
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="exposeContextBeansAsAttributes" value="true" />
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".jspx"/>
+        <property name="order" value="1"/>
+    </bean>
+    <bean id="tilesConfigurer"
+          class="org.springframework.web.servlet.view.tiles2.TilesConfigurer"
+          p:definitions="/WEB-INF/layouts/layouts.xml"/>
+
+    <bean id="tilesViewResolver"
+          class="org.springframework.web.servlet.view.UrlBasedViewResolver"
+          p:viewClass="org.springframework.web.servlet.view.tiles2.TilesView"
+          p:order="0"/>
+
+
+    <bean name="handlerAdapter"
+          class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>
+                <ref bean="jsonConverter"/>
+
+            </list>
+
+        </property>
+        <property name="requireSession" value="false"/>
+
+    </bean>
+    <bean id="jsonConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes" value="application/json"/>
+    </bean>
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="classpath:messages"/>
+        <property name="cacheSeconds" value="100"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+
+    <bean id="localeResolver"
+          class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <property name="defaultLocale" value="en"/>
+    </bean>
+    <bean id="localeChangeInterceptor"
+          class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+        <property name="paramName" value="lang"/>
+    </bean>
+    <!--<bean id="userContext" class="com.epam.training.persistence.pojo.UserContext" scope="session">-->
+        <!--&lt;!&ndash; this next element effects the proxying of the surrounding bean &ndash;&gt;-->
+        <!--<aop:scoped-proxy/>-->
+    <!--</bean>-->
+</beans>
